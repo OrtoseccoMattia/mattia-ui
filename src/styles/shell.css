@@ -1,0 +1,100 @@
+/* ============================================================
+   Shell responsive del kit: safe-area (notch / home indicator),
+   altezze di barra in alto e tab bar, sfondo animato, barra che
+   si nasconde scendendo (solo telefono).
+
+   Richiede `viewportFit: "cover"` nel viewport, altrimenti
+   env(safe-area-inset-*) vale sempre 0. Per cambiare l'altezza
+   delle barre basta sovrascrivere --appbar-h e --tabbar-h.
+   ============================================================ */
+
+/* ---- Utility safe-area (iPhone con notch / home indicator) --
+   Richiedono `viewportFit: "cover"` nel viewport export, senza
+   il quale env(safe-area-inset-*) vale sempre 0.
+   Sostituiscono la classe `pb-safe` che veniva usata nella tab
+   bar senza essere mai stata definita da nessuna parte.        */
+@utility pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+@utility pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+@utility pl-safe {
+  padding-left: env(safe-area-inset-left);
+}
+@utility pr-safe {
+  padding-right: env(safe-area-inset-right);
+}
+@utility px-safe {
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+@utility mb-safe {
+  margin-bottom: env(safe-area-inset-bottom);
+}
+@utility inset-b-safe {
+  bottom: env(safe-area-inset-bottom);
+}
+
+/* Altezze/offset dello shell: incapsulano la matematica
+   `calc(<barra> + env(...))` usata da navbar, main e tab bar,
+   così un solo punto governa gli allineamenti. */
+@utility h-appbar {
+  height: calc(var(--appbar-h) + env(safe-area-inset-top));
+}
+@utility pt-appbar {
+  padding-top: calc(var(--appbar-h) + env(safe-area-inset-top));
+}
+/* Bordo inferiore della barra in alto: segue `--toolbar-top`, che cambia quando la barra si nasconde
+   scendendo (solo telefono, vedi hooks/use-appbar-autohide.ts). Banner, indicatori e barre strumenti
+   si agganciano qui e, con la transizione, salgono o scendono insieme alla barra. */
+@utility top-appbar {
+  top: var(--toolbar-top);
+  transition: top 0.25s ease;
+}
+@utility h-tabbar {
+  height: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
+}
+/* Il margine include anche il pulsante "+" fluttuante (56px + 16px di
+   respiro), che sta sopra la tab bar: senza, copriva l'ultima riga di
+   ogni lista e il suo chevron. */
+@utility pb-tabbar {
+  padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 5rem);
+}
+/* Offset per elementi flottanti che devono stare sopra la tab bar
+   (FAB, barre di selezione). Include il margine di respiro. */
+@utility bottom-above-tabbar {
+  bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 1rem);
+}
+
+:root {
+  --appbar-h: 4rem;
+  --tabbar-h: 4rem;
+  /* Dove finisce la barra in alto: sotto di essa, oppure sul bordo (solo safe-area) se è nascosta. */
+  --toolbar-top: calc(var(--appbar-h) + env(safe-area-inset-top));
+  /* Altezza della tastiera virtuale, mantenuta da
+     hooks/use-visual-viewport.ts. 0 quando è chiusa. */
+  --kb-inset: 0px;
+}
+
+
+@keyframes blob {
+  0% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+.animate-blob { animation: blob 7s infinite alternate ease-in-out; }
+.animation-delay-2000 { animation-delay: 2s; }
+.animation-delay-4000 { animation-delay: 4s; }
+
+/* Barra in alto che si nasconde scendendo: solo telefono. L'attributo lo scrive
+   hooks/use-appbar-autohide.ts e non vale mai con "riduci movimento" o su desktop. */
+@media (max-width: 1023.98px) {
+  html[data-appbar="hidden"] {
+    --toolbar-top: env(safe-area-inset-top);
+  }
+  html[data-appbar="hidden"] nav[data-appbar-nav] {
+    transform: translateY(-100%);
+  }
+}

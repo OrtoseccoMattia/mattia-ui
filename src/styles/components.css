@@ -1,0 +1,148 @@
+/* ============================================================
+   Stili dei componenti del kit: pannelli in vetro, skeleton,
+   icone (Lucide + ripiego Material), feedback al tocco, sezioni
+   e cerchio di selezione. I colori vengono da theme.css.
+   ============================================================ */
+
+/* Glass Panels
+   Senza `!important` su ogni proprietà: prima nessuna istanza poteva
+   discostarsi dal pannello standard, quindi una card in griglia era
+   costretta alla stessa densità e allo stesso raggio di un pannello a
+   piena larghezza. Le utility Tailwind ora vincono normalmente, e
+   `.glass-panel--compact` copre il caso più frequente. */
+.glass-panel {
+  @apply p-4 sm:p-6;
+  background: var(--panel-bg);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--panel-shadow);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--panel-border);
+}
+.dark .glass-panel {
+  background: var(--panel-bg);
+  border-color: var(--panel-border);
+  box-shadow: var(--panel-shadow);
+}
+.glass-panel--compact {
+  @apply p-3 sm:p-4;
+  border-radius: var(--radius-card);
+}
+
+/* ---- Sezione di pagina ----------------------------------------
+   Su telefono una sezione non è un pannello: niente fondo, bordo,
+   ombra né padding laterale, così il contenuto usa tutta la larghezza
+   invece di perdere 24px per lato a ogni livello di annidamento. Le
+   sezioni consecutive si separano con una linea sottile.
+   Da `sm` in su torna il pannello, dove lo spazio c'è. */
+.section-panel {
+  position: relative;
+  padding: 1.25rem 0;
+}
+.section-panel + .section-panel,
+.section-panel.section-divider {
+  border-top: 1px solid var(--color-slate-200);
+}
+.dark .section-panel + .section-panel,
+.dark .section-panel.section-divider {
+  border-top-color: var(--color-midnight-800);
+}
+@media (min-width: 640px) {
+  .section-panel {
+    padding: 2rem;
+    background: var(--panel-bg);
+    border-radius: var(--radius-panel);
+    border: 1px solid var(--panel-border);
+    box-shadow: var(--panel-shadow);
+  }
+  .section-panel + .section-panel,
+  .section-panel.section-divider {
+    border-top: 1px solid var(--panel-border);
+  }
+  .dark .section-panel,
+  .dark .section-panel + .section-panel,
+  .dark .section-panel.section-divider {
+    background: var(--panel-bg);
+  border-color: var(--panel-border);
+    box-shadow: var(--panel-shadow);
+  }
+}
+
+/* Skeleton loaders */
+.skeleton {
+  @apply bg-slate-200/50! dark:bg-midnight-800/50! overflow-hidden! relative!;
+}
+.skeleton::after {
+  content: "";
+  @apply absolute inset-0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  animation: skeleton-shimmer 1.5s infinite;
+}
+@keyframes skeleton-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.scrollbar-hide { scrollbar-width: none; -ms-overflow-style: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+
+/* Icone SVG (Lucide): il foglio Material, caricato dopo come ripiego,
+   dichiara `display: inline-block` con la stessa specificità. */
+.material-icons.app-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ensure default Material Icons are visible in dark mode without overriding explicit colors */
+.dark .material-icons:not([class*="text-"]):not([class*="dark:text-"]) {
+  color: #e2e8f0;
+}
+
+/* Le icone sono legature: se il foglio di stile di Google non arriva
+   (rete lenta, CDN bloccato), ogni <span class="material-icons"> mostra
+   il proprio nome per esteso — "sports_esports" al posto del glifo — e
+   manda in pezzi tab bar, pillole e pulsanti. Vincolando la casella al
+   quadrato dell'icona il peggio che può succedere è un troncamento. */
+.material-icons {
+  /* Dimensione base che prima arrivava dal foglio di Google: ora quel
+     foglio è caricato in ritardo (solo ripiego) e senza questa riga le
+     icone SVG erediterebbero il font-size del testo fino al suo arrivo. */
+  font-size: 24px;
+  line-height: 1;
+  font-style: normal;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  max-width: 1em;
+  overflow: hidden;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* La chrome dell'app non è testo da selezionare: il long-press
+   su una tab o su un bottone non deve aprire il menu di
+   selezione iOS. Il contenuto resta selezionabile. */
+[data-app-chrome] {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Feedback tattile: senza :hover su touch serve una risposta al
+   press, altrimenti l'interfaccia sembra "morta". */
+@media (pointer: coarse) {
+  [data-press]:active {
+    transform: scale(0.97);
+  }
+}
+[data-press] {
+  transition: transform 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.selection-circle {
+  @apply w-7! h-7! rounded-full! border-2! flex! items-center! justify-center! transition-all! duration-300! shadow-xl!;
+}
+.selection-circle.selected { @apply bg-emerald-500! border-white!; }
+.selection-circle.unselected { @apply bg-white/80! dark:bg-midnight-900/80! backdrop-blur-md! border-slate-200! dark:border-midnight-700!; }

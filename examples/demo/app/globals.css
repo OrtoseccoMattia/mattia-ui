@@ -1,0 +1,55 @@
+@import "tailwindcss";
+/* Il kit: token, base shadcn, shell responsive, animazioni. */
+@import "@mattia/ui/styles.css";
+
+/* ============================================================
+   TEMA DEL SITO DEMO — è tutto quello che serve per cambiare
+   aspetto: una decina di variabili. Nessun componente è toccato.
+   ============================================================ */
+
+/* 1) Superfici: da blu notte a viola profondo. */
+:root {
+  --brand-surface-950: #140b24;
+  --brand-surface-900: #1e1235;
+  --brand-surface-800: #2d1d4d;
+  --brand-surface-700: #3d2a66;
+  --page-bg: #faf7ff;
+}
+
+/* 2) Accenti delle sezioni: nomi scelti dal sito, valori da qualunque
+      famiglia di colore. Si usano come `text-sunset-600`, `from-sunset-500`. */
+@theme {
+  --color-sunset-200: var(--color-amber-200);
+  --color-sunset-400: var(--color-amber-400);
+  --color-sunset-500: var(--color-amber-500);
+  --color-sunset-600: var(--color-amber-600);
+  --color-sunset-900: var(--color-amber-900);
+  --color-sunset-alt-500: var(--color-rose-500);
+
+  --color-lagoon-200: var(--color-cyan-200);
+  --color-lagoon-400: var(--color-cyan-400);
+  --color-lagoon-500: var(--color-cyan-500);
+  --color-lagoon-600: var(--color-cyan-600);
+  --color-lagoon-900: var(--color-cyan-900);
+  --color-lagoon-alt-500: var(--color-violet-500);
+
+  --font-sans: ui-rounded, "Segoe UI", system-ui, sans-serif;
+}
+
+/* 3) Variabili shadcn (bottoni, input, popover...) in tinta. */
+:root {
+  --primary: oklch(0.45 0.2 295);
+  --primary-foreground: oklch(0.98 0.01 295);
+  --ring: oklch(0.6 0.18 295);
+}
+.dark {
+  --primary: oklch(0.78 0.14 295);
+  --primary-foreground: oklch(0.2 0.08 295);
+  --background: oklch(0.17 0.05 295);
+  --card: oklch(0.22 0.06 295);
+  --popover: oklch(0.22 0.06 295);
+}
+
+body {
+  background-color: var(--page-bg);
+}

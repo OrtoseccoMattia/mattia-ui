@@ -1,0 +1,99 @@
+/* ============================================================
+   Token di tema — l'UNICO file da cambiare per ritinteggiare il sito.
+
+   Tutto il resto (globals.css, componenti) legge queste variabili:
+   per un altro sito basta sostituire i valori qui sotto, senza
+   toccare nessun componente. Questo file è il primo mattone del
+   futuro UI kit riusabile.
+
+   Due livelli:
+   1. Primitive  (--brand-*): i colori grezzi della palette.
+   2. Superfici  (--page-bg, --panel-*): ruoli semantici derivati.
+   ============================================================ */
+
+/* Palette: fondo scuro blu notte + due accenti di marca. */
+:root {
+  --brand-surface-950: #0B0E14; /* fondo pagina (tema scuro) */
+  --brand-surface-900: #151921; /* pannelli */
+  --brand-surface-800: #222832; /* bordi / rialzi */
+  --brand-surface-700: #2D3543; /* bordi forti */
+
+  --brand-accent-1: #8A2BE2; /* violetto */
+  --brand-accent-2: #D02090; /* rosa */
+
+  /* Ruoli semantici */
+  --page-bg: #f8fafc;
+  --panel-bg: rgba(255, 255, 255, 0.94);
+  --panel-border: rgba(255, 255, 255, 0.8);
+  --panel-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04);
+}
+
+.dark {
+  --page-bg: var(--brand-surface-950);
+  --panel-bg: color-mix(in srgb, var(--brand-surface-900) 95%, transparent);
+  --panel-border: var(--brand-surface-800);
+  --panel-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+}
+
+/* Le utility Tailwind (bg-midnight-900, text-cyber-pink, ...) restano
+   invariate: puntano ai token qui sopra. I nomi `midnight-*` e
+   `cyber-*` sono legacy; verranno rinominati in modo graduale. */
+@theme {
+  --color-midnight-950: var(--brand-surface-950);
+  --color-midnight-900: var(--brand-surface-900);
+  --color-midnight-800: var(--brand-surface-800);
+  --color-midnight-700: var(--brand-surface-700);
+
+  --color-cyber-violet: var(--brand-accent-1);
+  --color-cyber-pink: var(--brand-accent-2);
+}
+
+/* ---- Accenti di dominio ------------------------------------------
+   Ogni sezione (manga, anime, giochi) e la dashboard hanno una scala
+   di colore propria. Qui sono alias della palette Tailwind: per un
+   altro sito basta puntarli a un'altra famiglia (o a hex propri).
+   Le classi `text-manga-600`, `bg-anime-500`, `from-games-500
+   to-games-alt-600`... si usano come qualsiasi colore Tailwind.
+   `-alt-` è il secondo colore dei gradienti. */
+@theme {
+  --color-manga-50: var(--color-emerald-50);
+  --color-manga-200: var(--color-emerald-200);
+  --color-manga-300: var(--color-emerald-300);
+  --color-manga-400: var(--color-emerald-400);
+  --color-manga-500: var(--color-emerald-500);
+  --color-manga-600: var(--color-emerald-600);
+  --color-manga-700: var(--color-emerald-700);
+  --color-manga-900: var(--color-emerald-900);
+  --color-manga-alt-500: var(--color-teal-500);
+  --color-manga-alt-600: var(--color-teal-600);
+
+  --color-anime-50: var(--color-orange-50);
+  --color-anime-200: var(--color-orange-200);
+  --color-anime-300: var(--color-orange-300);
+  --color-anime-400: var(--color-orange-400);
+  --color-anime-500: var(--color-orange-500);
+  --color-anime-600: var(--color-orange-600);
+  --color-anime-700: var(--color-orange-700);
+  --color-anime-900: var(--color-orange-900);
+  --color-anime-alt-500: var(--color-pink-500);
+  --color-anime-alt-600: var(--color-pink-600);
+
+  --color-games-50: var(--color-blue-50);
+  --color-games-200: var(--color-blue-200);
+  --color-games-300: var(--color-blue-300);
+  --color-games-400: var(--color-blue-400);
+  --color-games-500: var(--color-blue-500);
+  --color-games-600: var(--color-blue-600);
+  --color-games-700: var(--color-blue-700);
+  --color-games-900: var(--color-blue-900);
+  --color-games-alt-500: var(--color-indigo-500);
+  --color-games-alt-600: var(--color-indigo-600);
+
+  --color-dash-200: var(--color-purple-200);
+  --color-dash-300: var(--color-purple-300);
+  --color-dash-400: var(--color-purple-400);
+  --color-dash-500: var(--color-purple-500);
+  --color-dash-600: var(--color-purple-600);
+  --color-dash-900: var(--color-purple-900);
+  --color-dash-alt-500: var(--color-pink-500);
+}

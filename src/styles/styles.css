@@ -1,0 +1,11 @@
+/* Entry CSS del kit: da importare dopo `@import "tailwindcss"`. */
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "./theme.css";
+@import "./base.css";
+@import "./shell.css";
+@import "./components.css";
+
+/* Fa scansionare a Tailwind le classi usate dai componenti del kit,
+   anche quando il sito che lo usa sta in un'altra cartella. */
+@source "../";
