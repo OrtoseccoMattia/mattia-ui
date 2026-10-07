@@ -86,3 +86,7 @@ icone aggiuntive in `icons` (oltre alle ~300 già mappate su Lucide, referenziat
 - `CollapsibleSection` ha un default di accento verde: passare `accentClassName`.
 - I nomi `midnight-*`, `cyber-*` sono storici; andrebbero rinominati (`surface-*`, `accent-*`).
 - Non ancora nel kit: toolbar/filtri/ricerca (hanno molti testi in italiano), che restano nell'app.
+
+## Licenza
+
+MIT, vedi [LICENSE](./LICENSE).
