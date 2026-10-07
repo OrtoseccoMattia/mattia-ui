@@ -33,8 +33,13 @@ Mentre sviluppi kit e sito insieme, in locale puoi usare `"@mattia/ui": "file:..
 1. Crea un'app Next.js 16 con Tailwind 4 e installa il kit da GitHub, fissando una versione (tag):
 
    ```json
-   "@mattia/ui": "github:OrtoseccoMattia/mattia-ui#v0.1.0"
+   "@mattia/ui": "git+https://github.com/OrtoseccoMattia/mattia-ui.git#v0.1.0"
    ```
+
+   **Attenzione al lockfile**: npm, per le dipendenze git, scrive in `package-lock.json` un indirizzo
+   `git+ssh://git@github.com/...`. Sulla CI e su Vercel non ci sono chiavi ssh e l'installazione fallisce:
+   dopo ogni `npm install` che tocca il kit, sostituisci `git+ssh://git@github.com/` con
+   `git+https://github.com/` nella riga `resolved` del kit.
 
    Poi installa anche i peer: `next-themes` (e `react`, `react-dom`, `tailwindcss` che hai già).
    Per iniziare puoi copiare `examples/demo` (cambiando la dipendenza da `file:../..` a quella sopra).
